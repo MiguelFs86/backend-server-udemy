@@ -2,7 +2,6 @@ var express = require('express');
 var bcrypt = require('bcryptjs');
 
 var jwt = require('jsonwebtoken');
-
 var SEED = require('../config/config').SEED;
 
 var Usuario = require('../models/usuario');
@@ -50,8 +49,6 @@ app.post('/', (req, res) => {
             token: token
         });
     });
-
-})
-
+});
 
 module.exports = app;
