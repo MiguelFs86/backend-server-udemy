@@ -9,7 +9,6 @@ var app = express();
 app.get('/todo/:busqueda', (req, res, next) => {
 
     var busqueda = req.params.busqueda;
-
     var regex = new RegExp(busqueda, 'i');
 
     Promise.all([buscarHospitales(busqueda, regex), buscarMedicos(busqueda, regex), buscarUsuarios(busqueda, regex)])
@@ -24,7 +23,7 @@ app.get('/todo/:busqueda', (req, res, next) => {
 });
 
 
-app.get('/coleccion/:tabla/:busuqeda', (req, res) => {
+app.get('/coleccion/:tabla/:busqueda', (req, res) => {
 
     var tabla = req.params.tabla;
     var busqueda = req.params.busqueda;
