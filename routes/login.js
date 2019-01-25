@@ -62,7 +62,8 @@ app.post('/google', async(req, res, next) => {
                     ok: true,
                     usuario: usuarioDB,
                     id: usuarioDB._id,
-                    token: token
+                    token: token,
+                    menu: obtenerMenu(usuario.role)
                 });
             }
         } else {
@@ -87,7 +88,8 @@ app.post('/google', async(req, res, next) => {
                         ok: true,
                         usuario: usuarioDB,
                         id: usuarioDB._id,
-                        token: token
+                        token: token,
+                        menu: obtenerMenu(usuarioDB.role)
                     });
                 }
 
@@ -95,12 +97,6 @@ app.post('/google', async(req, res, next) => {
             })
         }
     })
-
-    // return res.status(200).json({
-    //     ok: true,
-    //     mensaje: 'Ok',
-    //     googleUser: googleUser
-    // });
 })
 
 /* Regular Auth */
@@ -142,9 +138,40 @@ app.post('/', (req, res) => {
             result: { message: 'Login POST correct' },
             usuario: usuarioDB,
             id: usuarioDB._id,
-            token: token
+            token: token,
+            menu: obtenerMenu(usuarioDB.role)
         });
     });
 });
+
+
+function obtenerMenu(ROLE) {
+    var menu = [{
+            titulo: 'Principal',
+            icono: 'mdi mdi-gauge',
+            submenu: [
+                { titulo: 'Dashboard', url: '/dashboard' },
+                { titulo: 'ProgressBar', url: '/progress' },
+                { titulo: 'Graficas', url: '/graficas1' },
+                { titulo: 'Promesas', url: '/promesas' },
+                { titulo: 'Rxjs', url: '/rxjs' },
+            ]
+        },
+        {
+            titulo: 'Mantenimientos',
+            icono: 'mdi mdi-folder-lock-open',
+            submenu: [
+                // { titulo: 'Usuarios', url: '/usuarios' },
+                { titulo: 'Hospitales', url: '/hospitales' },
+                { titulo: 'Medicos', url: '/medicos' }
+            ]
+        }
+    ];
+
+    if (ROLE === 'ADMIN_ROLE') {
+        menu[1].submenu.unshift({ titulo: 'Usuarios', url: '/usuarios' })
+    }
+    return menu;
+}
 
 module.exports = app;
